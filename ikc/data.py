@@ -11,6 +11,7 @@ from pymodbus.payload import BinaryPayloadDecoder, BinaryPayloadBuilder
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 import time
+import random
 import logging
 
 logging.basicConfig()
@@ -36,7 +37,7 @@ def get_sensor_data():
 		Runs every second to get data from PLC and store into Periodic Sensor Data
 	"""
 
-	frappe.publish_realtime(event="msgprint", message="Started!", user=frappe.session.user)
+	# frappe.publish_realtime(event="msgprint", message="Started!", user=frappe.session.user)
 	_get_sensor_data()
 
 def _get_sensor_data():
@@ -56,10 +57,16 @@ def _get_sensor_data():
 		chamber_pressure = get_address_value(237)
 		f0_value = get_address_value(241)
 
+		# args = {
+		# 	'drain_temperature': drain_temperature,
+		# 	'chamber_pressure': chamber_pressure,
+		# 	'f0_value': f0_value,
+		# }
+
 		args = {
-			'drain_temperature': drain_temperature,
-			'chamber_pressure': chamber_pressure,
-			'f0_value': f0_value,
+			'drain_temperature': random.random() * time.time() / 100000,
+			'chamber_pressure': random.random() * time.time() / 100000,
+			'f0_value': random.random() * time.time() / 100000,
 		}
 
 		insert_data(doctype="Periodic Sensor Data", args=args)
@@ -101,8 +108,6 @@ def insert_data(doctype, args, test=0):
 		doc_dict = {'doctype': doctype, 'timestamp': get_datetime().strftime("%Y-%m-%d %H:%M:%S")}
 		doc_dict.update(args)
 		frappe.get_doc(doc_dict).insert(ignore_if_duplicate=True)
-	
-	frappe.db.commit()
 
 def get_address_value(address):
 	"""
@@ -143,4 +148,4 @@ def publish_data(args, error=0):
 		# Add js to app for frappe.realtime.on
 		event = "plc_connectio_error"
 
-	frappe.publish_realtime(event=event, message=args, user=frappe.session.user)
+	frappe.publish_realtime(event=event, message=args)
