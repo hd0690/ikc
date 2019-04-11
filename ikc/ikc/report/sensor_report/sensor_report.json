@@ -1,0 +1,32 @@
+{
+ "add_total_row": 0, 
+ "creation": "2019-04-03 22:49:43.291733", 
+ "disable_prepared_report": 0, 
+ "disabled": 0, 
+ "docstatus": 0, 
+ "doctype": "Report", 
+ "idx": 0, 
+ "is_standard": "Yes", 
+ "json": "{\"add_total_row\": 0}", 
+ "modified": "2019-04-10 23:34:15.268056", 
+ "modified_by": "Administrator", 
+ "module": "Ikc", 
+ "name": "Sensor Report", 
+ "owner": "Administrator", 
+ "prepared_report": 0, 
+ "query": "SELECT \n\ttimestamp as \"Timestamp\", \n\tdrain_temperature as \"Drain Temperature:Float:150\", \n\tchamber_pressure as \"Chamber Pressure:Float:150\", \n\tf0_value as \"F0 Value:Float:150\"\nFROM\n\t`tabPeriodic Sensor Data`", 
+ "ref_doctype": "Periodic Sensor Data", 
+ "report_name": "Sensor Report", 
+ "report_type": "Script Report", 
+ "roles": [
+  {
+   "role": "System Manager"
+  }, 
+  {
+   "role": "Local Admin"
+  }, 
+  {
+   "role": "Local Manager"
+  }
+ ]
+}
