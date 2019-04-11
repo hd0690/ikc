@@ -12,7 +12,11 @@ frappe.ui.form.on('Main Control', {
 		})
 	},
 	refresh: function(frm) {
-		cur_frm.disable_save();
+		if(!frappe.user.has_role('Local Admin')){
+			frm.disable_save();
+			frm.set_df_property('no_of_doors', 'read_only', 1);
+			frm.set_df_property('no_of_temperature_sensors', 'read_only', 1);
+		}
 	},
 	start: function(frm){
 		frm.events.update_address_value(frm, 'start');
